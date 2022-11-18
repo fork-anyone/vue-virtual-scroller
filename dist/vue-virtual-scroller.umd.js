@@ -697,8 +697,7 @@
       return {
         pool: [],
         totalSize: 0,
-        ready: false,
-        hoverKey: null
+        ready: false
       };
     },
     computed: {
@@ -1311,7 +1310,6 @@
               {
                 key: view.nr.id,
                 staticClass: "vue-recycle-scroller__item-view",
-                class: { hover: _vm.hoverKey === view.nr.key },
                 style: _vm.ready
                   ? {
                       transform:
@@ -1321,15 +1319,7 @@
                         view.position +
                         "px)"
                     }
-                  : null,
-                on: {
-                  mouseenter: function($event) {
-                    _vm.hoverKey = view.nr.key;
-                  },
-                  mouseleave: function($event) {
-                    _vm.hoverKey = null;
-                  }
-                }
+                  : null
               },
               [
                 _vm._t("default", null, {
