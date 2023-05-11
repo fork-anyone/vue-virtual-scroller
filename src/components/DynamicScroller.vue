@@ -96,7 +96,8 @@ export default {
       const result = []
       const { items, keyField, simpleArray } = this
       const sizes = this.vscrollData.sizes
-      for (let i = 0; i < items.length; i++) {
+      const length = items.length;
+      for (let i = 0; i < length; i++) {
         const item = items[i]
         const id = simpleArray ? i : item[keyField]
         let size = sizes[id]
