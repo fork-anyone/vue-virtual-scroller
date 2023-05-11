@@ -1,31 +1,47 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('vue')) :
   typeof define === 'function' && define.amd ? define(['exports', 'vue'], factory) :
-  (global = global || self, factory(global['vue-virtual-scroller'] = {}, global.Vue));
-}(this, (function (exports, Vue) { 'use strict';
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["vue-virtual-scroller"] = {}, global.Vue));
+})(this, (function (exports, Vue) { 'use strict';
 
-  Vue = Vue && Object.prototype.hasOwnProperty.call(Vue, 'default') ? Vue['default'] : Vue;
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+  var Vue__default = /*#__PURE__*/_interopDefaultLegacy(Vue);
 
   var config = {
     itemsLimit: 1000
   };
 
-  function _typeof(obj) {
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      enumerableOnly && (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = null != arguments[i] ? arguments[i] : {};
+      i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+    return target;
+  }
+  function _typeof$1(obj) {
     "@babel/helpers - typeof";
 
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function (obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
+    return _typeof$1 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+      return typeof obj;
+    } : function (obj) {
+      return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof$1(obj);
   }
-
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -37,68 +53,28 @@
     } else {
       obj[key] = value;
     }
-
     return obj;
   }
-
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly) symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
-      keys.push.apply(keys, symbols);
-    }
-
-    return keys;
-  }
-
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-
-    return target;
-  }
-
   function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
-
   function _arrayLikeToArray(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
-
     for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
     return arr2;
   }
-
-  function _createForOfIteratorHelper(o) {
-    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
-      if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) {
+  function _createForOfIteratorHelper(o, allowArrayLike) {
+    var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+    if (!it) {
+      if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+        if (it) o = it;
         var i = 0;
-
         var F = function () {};
-
         return {
           s: F,
           n: function () {
@@ -116,17 +92,14 @@
           f: F
         };
       }
-
       throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
     }
-
-    var it,
-        normalCompletion = true,
-        didErr = false,
-        err;
+    var normalCompletion = true,
+      didErr = false,
+      err;
     return {
       s: function () {
-        it = o[Symbol.iterator]();
+        it = it.call(o);
       },
       n: function () {
         var step = it.next();
@@ -237,41 +210,41 @@
   };
 
   // Install the components
-  function install(Vue) {
+  function install$1(Vue) {
   	Vue.component('resize-observer', ResizeObserver$1);
   	Vue.component('ResizeObserver', ResizeObserver$1);
   }
 
   // Plugin
-  var plugin = {
+  var plugin$2 = {
   	// eslint-disable-next-line no-undef
   	version: "0.4.5",
-  	install: install
+  	install: install$1
   };
 
   // Auto-install
-  var GlobalVue = null;
+  var GlobalVue$2 = null;
   if (typeof window !== 'undefined') {
-  	GlobalVue = window.Vue;
+  	GlobalVue$2 = window.Vue;
   } else if (typeof global !== 'undefined') {
-  	GlobalVue = global.Vue;
+  	GlobalVue$2 = global.Vue;
   }
-  if (GlobalVue) {
-  	GlobalVue.use(plugin);
+  if (GlobalVue$2) {
+  	GlobalVue$2.use(plugin$2);
   }
 
-  function _typeof$1(obj) {
+  function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof$1 = function (obj) {
+      _typeof = function (obj) {
         return typeof obj;
       };
     } else {
-      _typeof$1 = function (obj) {
+      _typeof = function (obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
       };
     }
 
-    return _typeof$1(obj);
+    return _typeof(obj);
   }
 
   function _classCallCheck(instance, Constructor) {
@@ -372,7 +345,7 @@
   function deepEqual(val1, val2) {
     if (val1 === val2) return true;
 
-    if (_typeof$1(val1) === 'object') {
+    if (_typeof(val1) === 'object') {
       for (var key in val1) {
         if (!deepEqual(val1[key], val2[key])) {
           return false;
@@ -533,7 +506,7 @@
     unbind: unbind
   };
 
-  function install$1(Vue) {
+  function install(Vue) {
     Vue.directive('observe-visibility', ObserveVisibility);
     /* -- Add more components here -- */
   }
@@ -545,7 +518,7 @@
   var plugin$1 = {
     // eslint-disable-next-line no-undef
     version: "0.4.6",
-    install: install$1
+    install: install
   };
 
   var GlobalVue$1 = null;
@@ -568,7 +541,7 @@
 
   var scrollparent = createCommonjsModule(function (module) {
   (function (root, factory) {
-    if ( module.exports) {
+    if (module.exports) {
       module.exports = factory();
     } else {
       root.Scrollparent = factory();
@@ -632,14 +605,12 @@
     }
   };
   function simpleArray() {
-    return this.items.length && _typeof(this.items[0]) !== 'object';
+    return this.items.length && _typeof$1(this.items[0]) !== 'object';
   }
 
   var supportsPassive = false;
-
   if (typeof window !== 'undefined') {
     supportsPassive = false;
-
     try {
       var opts = Object.defineProperty({}, 'passive', {
         get: function get() {
@@ -651,7 +622,7 @@
   }
 
   var uid = 0;
-  var script = {
+  var script$2 = {
     name: 'RecycleScroller',
     components: {
       ResizeObserver: ResizeObserver$1
@@ -659,7 +630,7 @@
     directives: {
       ObserveVisibility: ObserveVisibility
     },
-    props: _objectSpread2({}, props, {
+    props: _objectSpread2(_objectSpread2({}, props), {}, {
       itemSize: {
         type: Number,
         default: null
@@ -714,26 +685,21 @@
           var computedMinSize = 10000;
           var accumulator = 0;
           var current;
-
           for (var i = 0, l = items.length; i < l; i++) {
             current = items[i][field] || minItemSize;
-
             if (current < computedMinSize) {
               computedMinSize = current;
             }
-
             accumulator += current;
             sizes[i] = {
               accumulator: accumulator,
               size: current
             };
-          } // eslint-disable-next-line
-
-
+          }
+          // eslint-disable-next-line
           this.$_computedMinItemSize = computedMinSize;
           return sizes;
         }
-
         return [];
       },
       simpleArray: simpleArray
@@ -759,9 +725,10 @@
       this.$_views = new Map();
       this.$_unusedViews = new Map();
       this.$_scrollDirty = false;
-      this.$_lastUpdateScrollPosition = 0; // In SSR mode, we also prerender the same number of item for the first render
-      // to avoir mismatch between server and client templates
+      this.$_lastUpdateScrollPosition = 0;
 
+      // In SSR mode, we also prerender the same number of item for the first render
+      // to avoir mismatch between server and client templates
       if (this.prerender) {
         this.$_prerender = true;
         this.updateVisibleItems(false);
@@ -769,14 +736,11 @@
     },
     mounted: function mounted() {
       var _this = this;
-
       this.applyPageMode();
       this.$nextTick(function () {
         // In SSR mode, render the real number of visible items
         _this.$_prerender = false;
-
         _this.updateVisibleItems(true);
-
         _this.ready = true;
       });
     },
@@ -808,14 +772,11 @@
         var unusedViews = this.$_unusedViews;
         var type = view.nr.type;
         var unusedPool = unusedViews.get(type);
-
         if (!unusedPool) {
           unusedPool = [];
           unusedViews.set(type, unusedPool);
         }
-
         unusedPool.push(view);
-
         if (!fake) {
           view.nr.used = false;
           view.position = -9999;
@@ -828,17 +789,15 @@
       },
       handleScroll: function handleScroll(event) {
         var _this2 = this;
-
         if (!this.$_scrollDirty) {
           this.$_scrollDirty = true;
           requestAnimationFrame(function () {
             _this2.$_scrollDirty = false;
-
             var _this2$updateVisibleI = _this2.updateVisibleItems(false, true),
-                continuous = _this2$updateVisibleI.continuous; // It seems sometimes chrome doesn't fire scroll event :/
+              continuous = _this2$updateVisibleI.continuous;
+
+            // It seems sometimes chrome doesn't fire scroll event :/
             // When non continous scrolling is ending, we force a refresh
-
-
             if (!continuous) {
               clearTimeout(_this2.$_refreshTimout);
               _this2.$_refreshTimout = setTimeout(_this2.handleScroll, 100);
@@ -848,7 +807,6 @@
       },
       handleVisibilityChange: function handleVisibilityChange(isVisible, entry) {
         var _this3 = this;
-
         if (this.ready) {
           if (isVisible || entry.boundingClientRect.width !== 0 || entry.boundingClientRect.height !== 0) {
             this.$emit('visible');
@@ -874,7 +832,6 @@
         var pool = this.pool;
         var startIndex, endIndex;
         var totalSize;
-
         if (!count) {
           startIndex = endIndex = totalSize = 0;
         } else if (this.$_prerender) {
@@ -882,134 +839,122 @@
           endIndex = this.prerender;
           totalSize = null;
         } else {
-          var scroll = this.getScroll(); // Skip update if use hasn't scrolled enough
+          var scroll = this.getScroll();
 
+          // Skip update if use hasn't scrolled enough
           if (checkPositionDiff) {
             var positionDiff = scroll.start - this.$_lastUpdateScrollPosition;
             if (positionDiff < 0) positionDiff = -positionDiff;
-
             if (itemSize === null && positionDiff < minItemSize || positionDiff < itemSize) {
               return {
                 continuous: true
               };
             }
           }
-
           this.$_lastUpdateScrollPosition = scroll.start;
           var buffer = this.buffer;
           scroll.start -= buffer;
-          scroll.end += buffer; // Variable size mode
+          scroll.end += buffer;
 
+          // Variable size mode
           if (itemSize === null) {
             var h;
             var a = 0;
             var b = count - 1;
             var i = ~~(count / 2);
-            var oldI; // Searching for startIndex
+            var oldI;
 
+            // Searching for startIndex
             do {
               oldI = i;
               h = sizes[i].accumulator;
-
               if (h < scroll.start) {
                 a = i;
               } else if (i < count - 1 && sizes[i + 1].accumulator > scroll.start) {
                 b = i;
               }
-
               i = ~~((a + b) / 2);
             } while (i !== oldI);
-
             i < 0 && (i = 0);
-            startIndex = i; // For container style
+            startIndex = i;
 
-            totalSize = sizes[count - 1].accumulator; // Searching for endIndex
+            // For container style
+            totalSize = sizes[count - 1].accumulator;
 
+            // Searching for endIndex
             for (endIndex = i; endIndex < count && sizes[endIndex].accumulator < scroll.end; endIndex++) {
             }
-
             if (endIndex === -1) {
               endIndex = items.length - 1;
             } else {
-              endIndex++; // Bounds
-
+              endIndex++;
+              // Bounds
               endIndex > count && (endIndex = count);
             }
           } else {
             // Fixed size mode
             startIndex = ~~(scroll.start / itemSize);
-            endIndex = Math.ceil(scroll.end / itemSize); // Bounds
+            endIndex = Math.ceil(scroll.end / itemSize);
 
+            // Bounds
             startIndex < 0 && (startIndex = 0);
             endIndex > count && (endIndex = count);
             totalSize = count * itemSize;
           }
         }
-
         if (endIndex - startIndex > config.itemsLimit) {
           this.itemsLimitError();
         }
-
         this.totalSize = totalSize;
         var view;
         var continuous = startIndex <= this.$_endIndex && endIndex >= this.$_startIndex;
-
         if (this.$_continuous !== continuous) {
           if (continuous) {
             views.clear();
             unusedViews.clear();
-
             for (var _i = 0, l = pool.length; _i < l; _i++) {
               view = pool[_i];
               this.unuseView(view);
             }
           }
-
           this.$_continuous = continuous;
         } else if (continuous) {
           for (var _i2 = 0, _l = pool.length; _i2 < _l; _i2++) {
             view = pool[_i2];
-
             if (view.nr.used) {
               // Update view item index
               if (checkItem) {
                 view.nr.index = items.findIndex(function (item) {
                   return keyField ? item[keyField] === view.item[keyField] : item === view.item;
                 });
-              } // Check if index is still in visible range
+              }
 
-
+              // Check if index is still in visible range
               if (view.nr.index === -1 || view.nr.index < startIndex || view.nr.index >= endIndex) {
                 this.unuseView(view);
               }
             }
           }
         }
-
         var unusedIndex = continuous ? null : new Map();
         var item, type, unusedPool;
         var v;
-
         for (var _i3 = startIndex; _i3 < endIndex; _i3++) {
           item = items[_i3];
           var key = keyField ? item[keyField] : item;
-
           if (key == null) {
             throw new Error("Key is ".concat(key, " on item (keyField is '").concat(keyField, "')"));
           }
-
           view = views.get(key);
-
           if (!itemSize && !sizes[_i3].size) {
             if (view) this.unuseView(view);
             continue;
-          } // No view assigned to item
+          }
 
-
+          // No view assigned to item
           if (!view) {
             type = item[typeField];
             unusedPool = unusedViews.get(type);
-
             if (continuous) {
               // Reuse existing view
               if (unusedPool && unusedPool.length) {
@@ -1027,13 +972,11 @@
               // We don't care if they are already used
               // because we are not in continous scrolling
               v = unusedIndex.get(type) || 0;
-
               if (!unusedPool || v >= unusedPool.length) {
                 view = this.addView(pool, _i3, item, key, type);
                 this.unuseView(view, true);
                 unusedPool = unusedViews.get(type);
               }
-
               view = unusedPool[v];
               view.item = item;
               view.nr.used = true;
@@ -1043,26 +986,25 @@
               unusedIndex.set(type, v + 1);
               v++;
             }
-
             views.set(key, view);
           } else {
             view.nr.used = true;
             view.item = item;
-          } // Update position
+          }
 
-
+          // Update position
           if (itemSize === null) {
             view.position = sizes[_i3 - 1].accumulator;
           } else {
             view.position = _i3 * itemSize;
           }
         }
-
         this.$_startIndex = startIndex;
         this.$_endIndex = endIndex;
-        if (this.emitUpdate) this.$emit('update', startIndex, endIndex); // After the user has finished scrolling
-        // Sort views so text selection is correct
+        if (this.emitUpdate) this.$emit('update', startIndex, endIndex);
 
+        // After the user has finished scrolling
+        // Sort views so text selection is correct
         clearTimeout(this.$_sortTimer);
         this.$_sortTimer = setTimeout(this.sortViews, 300);
         return {
@@ -1070,35 +1012,30 @@
         };
       },
       getListenerTarget: function getListenerTarget() {
-        var target = scrollparent(this.$el); // Fix global scroll target for Chrome and Safari
-
+        var target = scrollparent(this.$el);
+        // Fix global scroll target for Chrome and Safari
         if (window.document && (target === window.document.documentElement || target === window.document.body)) {
           target = window;
         }
-
         return target;
       },
       getScroll: function getScroll() {
         var el = this.$el,
-            direction = this.direction;
+          direction = this.direction;
         var isVertical = direction === 'vertical';
         var scrollState;
-
         if (this.pageMode) {
           var bounds = el.getBoundingClientRect();
           var boundsSize = isVertical ? bounds.height : bounds.width;
           var start = -(isVertical ? bounds.top : bounds.left);
           var size = isVertical ? window.innerHeight : window.innerWidth;
-
           if (start < 0) {
             size += start;
             start = 0;
           }
-
           if (start + size > boundsSize) {
             size = boundsSize - start;
           }
-
           scrollState = {
             start: start,
             end: start + size
@@ -1114,7 +1051,6 @@
             end: el.scrollLeft + el.clientWidth
           };
         }
-
         return scrollState;
       },
       applyPageMode: function applyPageMode() {
@@ -1135,20 +1071,17 @@
         if (!this.listenerTarget) {
           return;
         }
-
         this.listenerTarget.removeEventListener('scroll', this.handleScroll);
         this.listenerTarget.removeEventListener('resize', this.handleResize);
         this.listenerTarget = null;
       },
       scrollToItem: function scrollToItem(index) {
         var scroll;
-
         if (this.itemSize === null) {
           scroll = index > 0 ? this.sizes[index - 1].accumulator : 0;
         } else {
           scroll = index * this.itemSize;
         }
-
         this.scrollToPosition(scroll);
       },
       scrollToPosition: function scrollToPosition(position) {
@@ -1160,7 +1093,6 @@
       },
       itemsLimitError: function itemsLimitError() {
         var _this4 = this;
-
         setTimeout(function () {
           console.log('It seems the scroller element isn\'t scrolling, so it tries to render all the items at once.', 'Scroller:', _this4.$el);
           console.log('Make sure the scroller has a fixed height (or width) and \'overflow-y\' (or \'overflow-x\') set to \'auto\' so it can scroll correctly and only render the items visible in the scroll viewport.');
@@ -1251,9 +1183,9 @@
   }
 
   /* script */
-  const __vue_script__ = script;
+  const __vue_script__$2 = script$2;
   /* template */
-  var __vue_render__ = function() {
+  var __vue_render__$1 = function () {
     var _obj, _obj$1;
     var _vm = this;
     var _h = _vm.$createElement;
@@ -1266,22 +1198,22 @@
             name: "observe-visibility",
             rawName: "v-observe-visibility",
             value: _vm.handleVisibilityChange,
-            expression: "handleVisibilityChange"
-          }
+            expression: "handleVisibilityChange",
+          },
         ],
         staticClass: "vue-recycle-scroller",
         class:
           ((_obj = {
             ready: _vm.ready,
-            "page-mode": _vm.pageMode
+            "page-mode": _vm.pageMode,
           }),
           (_obj["direction-" + _vm.direction] = true),
           _obj),
         on: {
-          "&scroll": function($event) {
-            return _vm.handleScroll($event)
-          }
-        }
+          "&scroll": function ($event) {
+            return _vm.handleScroll.apply(null, arguments)
+          },
+        },
       },
       [
         _vm.$slots.before
@@ -1302,9 +1234,9 @@
               ((_obj$1 = {}),
               (_obj$1[_vm.direction === "vertical" ? "minHeight" : "minWidth"] =
                 _vm.totalSize + "px"),
-              _obj$1)
+              _obj$1),
           },
-          _vm._l(_vm.pool, function(view) {
+          _vm._l(_vm.pool, function (view) {
             return _c(
               "div",
               {
@@ -1317,16 +1249,16 @@
                         (_vm.direction === "vertical" ? "Y" : "X") +
                         "(" +
                         view.position +
-                        "px)"
+                        "px)",
                     }
-                  : null
+                  : null,
               },
               [
                 _vm._t("default", null, {
                   item: view.item,
                   index: view.nr.index,
-                  active: view.nr.used
-                })
+                  active: view.nr.used,
+                }),
               ],
               2
             )
@@ -1343,22 +1275,22 @@
             )
           : _vm._e(),
         _vm._v(" "),
-        _c("ResizeObserver", { on: { notify: _vm.handleResize } })
+        _c("ResizeObserver", { on: { notify: _vm.handleResize } }),
       ],
       1
     )
   };
-  var __vue_staticRenderFns__ = [];
-  __vue_render__._withStripped = true;
+  var __vue_staticRenderFns__$1 = [];
+  __vue_render__$1._withStripped = true;
 
     /* style */
-    const __vue_inject_styles__ = undefined;
+    const __vue_inject_styles__$2 = undefined;
     /* scoped */
-    const __vue_scope_id__ = undefined;
+    const __vue_scope_id__$2 = undefined;
     /* module identifier */
-    const __vue_module_identifier__ = undefined;
+    const __vue_module_identifier__$2 = undefined;
     /* functional template */
-    const __vue_is_functional_template__ = false;
+    const __vue_is_functional_template__$2 = false;
     /* style inject */
     
     /* style inject SSR */
@@ -1367,13 +1299,13 @@
     
 
     
-    const __vue_component__ = normalizeComponent(
-      { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
-      __vue_inject_styles__,
-      __vue_script__,
-      __vue_scope_id__,
-      __vue_is_functional_template__,
-      __vue_module_identifier__,
+    const __vue_component__$2 = /*#__PURE__*/normalizeComponent(
+      { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
+      __vue_inject_styles__$2,
+      __vue_script__$2,
+      __vue_scope_id__$2,
+      __vue_is_functional_template__$2,
+      __vue_module_identifier__$2,
       false,
       undefined,
       undefined,
@@ -1383,19 +1315,17 @@
   var script$1 = {
     name: 'DynamicScroller',
     components: {
-      RecycleScroller: __vue_component__
+      RecycleScroller: __vue_component__$2
     },
     inheritAttrs: false,
     provide: function provide() {
       if (typeof ResizeObserver !== 'undefined') {
         this.$_resizeObserver = new ResizeObserver(function (entries) {
           var _iterator = _createForOfIteratorHelper(entries),
-              _step;
-
+            _step;
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
               var entry = _step.value;
-
               if (entry.target) {
                 var event = new CustomEvent('resize', {
                   detail: {
@@ -1412,14 +1342,13 @@
           }
         });
       }
-
       return {
         vscrollData: this.vscrollData,
         vscrollParent: this,
         vscrollResizeObserver: this.$_resizeObserver
       };
     },
-    props: _objectSpread2({}, props, {
+    props: _objectSpread2(_objectSpread2({}, props), {}, {
       minItemSize: {
         type: [Number, String],
         required: true
@@ -1441,37 +1370,32 @@
       itemsWithSize: function itemsWithSize() {
         var result = [];
         var items = this.items,
-            keyField = this.keyField,
-            simpleArray = this.simpleArray;
+          keyField = this.keyField,
+          simpleArray = this.simpleArray;
         var sizes = this.vscrollData.sizes;
-
-        for (var i = 0; i < items.length; i++) {
+        var length = items.length;
+        for (var i = 0; i < length; i++) {
           var item = items[i];
           var id = simpleArray ? i : item[keyField];
           var size = sizes[id];
-
           if (typeof size === 'undefined' && !this.$_undefinedMap[id]) {
             size = 0;
           }
-
           result.push({
             item: item,
             id: id,
             size: size
           });
         }
-
         return result;
       },
       listeners: function listeners() {
         var listeners = {};
-
         for (var key in this.$listeners) {
           if (key !== 'resize' && key !== 'visible') {
             listeners[key] = this.$listeners[key];
           }
         }
-
         return listeners;
       }
     },
@@ -1503,11 +1427,9 @@
     methods: {
       onScrollerResize: function onScrollerResize() {
         var scroller = this.$refs.scroller;
-
         if (scroller) {
           this.forceUpdate();
         }
-
         this.$emit('resize');
       },
       onScrollerVisible: function onScrollerVisible() {
@@ -1518,11 +1440,9 @@
       },
       forceUpdate: function forceUpdate() {
         var clear = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
         if (clear || this.simpleArray) {
           this.vscrollData.validSizes = {};
         }
-
         this.$emit('vscroll:update', {
           force: true
         });
@@ -1538,19 +1458,17 @@
       },
       scrollToBottom: function scrollToBottom() {
         var _this = this;
-
         if (this.$_scrollingToBottom) return;
         this.$_scrollingToBottom = true;
-        var el = this.$el; // Item is inserted to the DOM
-
+        var el = this.$el;
+        // Item is inserted to the DOM
         this.$nextTick(function () {
-          el.scrollTop = el.scrollHeight + 5000; // Item sizes are computed
-
+          el.scrollTop = el.scrollHeight + 5000;
+          // Item sizes are computed
           var cb = function cb() {
             el.scrollTop = el.scrollHeight + 5000;
             requestAnimationFrame(function () {
               el.scrollTop = el.scrollHeight + 5000;
-
               if (_this.$_undefinedSizes === 0) {
                 _this.$_scrollingToBottom = false;
               } else {
@@ -1558,7 +1476,6 @@
               }
             });
           };
-
           requestAnimationFrame(cb);
         });
       }
@@ -1569,7 +1486,7 @@
   const __vue_script__$1 = script$1;
 
   /* template */
-  var __vue_render__$1 = function() {
+  var __vue_render__ = function () {
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
@@ -1583,14 +1500,14 @@
               items: _vm.itemsWithSize,
               "min-item-size": _vm.minItemSize,
               direction: _vm.direction,
-              "key-field": "id"
+              "key-field": "id",
             },
             on: { resize: _vm.onScrollerResize, visible: _vm.onScrollerVisible },
             scopedSlots: _vm._u(
               [
                 {
                   key: "default",
-                  fn: function(ref) {
+                  fn: function (ref) {
                     var itemWithSize = ref.item;
                     var index = ref.index;
                     var active = ref.active;
@@ -1599,15 +1516,15 @@
                         item: itemWithSize.item,
                         index: index,
                         active: active,
-                        itemWithSize: itemWithSize
-                      })
+                        itemWithSize: itemWithSize,
+                      }),
                     ]
-                  }
-                }
+                  },
+                },
               ],
               null,
               true
-            )
+            ),
           },
           "RecycleScroller",
           _vm.$attrs,
@@ -1619,13 +1536,13 @@
         _vm._v(" "),
         _c("template", { slot: "before" }, [_vm._t("before")], 2),
         _vm._v(" "),
-        _c("template", { slot: "after" }, [_vm._t("after")], 2)
+        _c("template", { slot: "after" }, [_vm._t("after")], 2),
       ],
       2
     )
   };
-  var __vue_staticRenderFns__$1 = [];
-  __vue_render__$1._withStripped = true;
+  var __vue_staticRenderFns__ = [];
+  __vue_render__._withStripped = true;
 
     /* style */
     const __vue_inject_styles__$1 = undefined;
@@ -1643,8 +1560,8 @@
     
 
     
-    const __vue_component__$1 = normalizeComponent(
-      { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
+    const __vue_component__$1 = /*#__PURE__*/normalizeComponent(
+      { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
       __vue_inject_styles__$1,
       __vue_script__$1,
       __vue_scope_id__$1,
@@ -1656,7 +1573,7 @@
       undefined
     );
 
-  var script$2 = {
+  var script = {
     name: 'DynamicScrollerItem',
     inject: ['vscrollData', 'vscrollParent', 'vscrollResizeObserver'],
     props: {
@@ -1668,7 +1585,6 @@
         type: Boolean,
         default: false
       },
-
       /**
        * Indicates if the view is actively used to display an item.
        */
@@ -1725,7 +1641,6 @@
             }
           }
         }
-
         if (this.vscrollResizeObserver) {
           if (value) {
             this.observeSize();
@@ -1739,22 +1654,18 @@
     },
     created: function created() {
       var _this = this;
-
       if (this.$isServer) return;
       this.$_forceNextVScrollUpdate = null;
       this.updateWatchData();
-
       if (!this.vscrollResizeObserver) {
         var _loop = function _loop(k) {
           _this.$watch(function () {
             return _this.sizeDependencies[k];
           }, _this.onDataUpdate);
         };
-
         for (var k in this.sizeDependencies) {
           _loop(k);
         }
-
         this.vscrollParent.$on('vscroll:update', this.onVscrollUpdate);
         this.vscrollParent.$on('vscroll:update-size', this.onVscrollUpdateSize);
       }
@@ -1785,9 +1696,8 @@
       },
       updateWatchData: function updateWatchData() {
         var _this2 = this;
-
         if (this.watchData) {
-          this.$_watchData = this.$watch('data', function () {
+          this.$_watchData = this.$watch('item', function () {
             _this2.onDataUpdate();
           }, {
             deep: true
@@ -1799,12 +1709,10 @@
       },
       onVscrollUpdate: function onVscrollUpdate(_ref) {
         var force = _ref.force;
-
         // If not active, sechedule a size update when it becomes active
         if (!this.finalActive && force) {
           this.$_pendingVScrollUpdate = this.id;
         }
-
         if (this.$_forceNextVScrollUpdate === this.id || force || !this.size) {
           this.updateSize();
         }
@@ -1814,27 +1722,22 @@
       },
       computeSize: function computeSize(id) {
         var _this3 = this;
-
         this.$nextTick(function () {
           if (_this3.id === id) {
             var width = _this3.$el.offsetWidth;
             var height = _this3.$el.offsetHeight;
-
             _this3.applySize(width, height);
           }
-
           _this3.$_pendingSizeUpdate = null;
         });
       },
       applySize: function applySize(width, height) {
         var size = Math.round(this.vscrollParent.direction === 'vertical' ? height : width);
-
         if (size && this.size !== size) {
           if (this.vscrollParent.$_undefinedMap[this.id]) {
             this.vscrollParent.$_undefinedSizes--;
             this.vscrollParent.$_undefinedMap[this.id] = undefined;
           }
-
           this.$set(this.vscrollData.sizes, this.id, size);
           this.$set(this.vscrollData.validSizes, this.id, true);
           if (this.emitResize) this.$emit('resize', this.id);
@@ -1852,8 +1755,8 @@
       },
       onResize: function onResize(event) {
         var _event$detail$content = event.detail.contentRect,
-            width = _event$detail$content.width,
-            height = _event$detail$content.height;
+          width = _event$detail$content.width,
+          height = _event$detail$content.height;
         this.applySize(width, height);
       }
     },
@@ -1863,18 +1766,18 @@
   };
 
   /* script */
-  const __vue_script__$2 = script$2;
+  const __vue_script__ = script;
 
   /* template */
 
     /* style */
-    const __vue_inject_styles__$2 = undefined;
+    const __vue_inject_styles__ = undefined;
     /* scoped */
-    const __vue_scope_id__$2 = undefined;
+    const __vue_scope_id__ = undefined;
     /* module identifier */
-    const __vue_module_identifier__$2 = undefined;
+    const __vue_module_identifier__ = undefined;
     /* functional template */
-    const __vue_is_functional_template__$2 = undefined;
+    const __vue_is_functional_template__ = undefined;
     /* style inject */
     
     /* style inject SSR */
@@ -1883,13 +1786,13 @@
     
 
     
-    const __vue_component__$2 = normalizeComponent(
+    const __vue_component__ = /*#__PURE__*/normalizeComponent(
       {},
-      __vue_inject_styles__$2,
-      __vue_script__$2,
-      __vue_scope_id__$2,
-      __vue_is_functional_template__$2,
-      __vue_module_identifier__$2,
+      __vue_inject_styles__,
+      __vue_script__,
+      __vue_scope_id__,
+      __vue_is_functional_template__,
+      __vue_module_identifier__,
       false,
       undefined,
       undefined,
@@ -1898,20 +1801,20 @@
 
   function IdState () {
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-        _ref$idProp = _ref.idProp,
-        idProp = _ref$idProp === void 0 ? function (vm) {
-      return vm.item.id;
-    } : _ref$idProp;
-
+      _ref$idProp = _ref.idProp,
+      idProp = _ref$idProp === void 0 ? function (vm) {
+        return vm.item.id;
+      } : _ref$idProp;
     var store = {};
-    var vm = new Vue({
+    var vm = new Vue__default["default"]({
       data: function data() {
         return {
           store: store
         };
       }
-    }); // @vue/component
+    });
 
+    // @vue/component
     return {
       data: function data() {
         return {
@@ -1920,9 +1823,7 @@
       },
       created: function created() {
         var _this = this;
-
         this.$_id = null;
-
         if (typeof idProp === 'function') {
           this.$_getId = function () {
             return idProp.call(_this, _this);
@@ -1932,11 +1833,9 @@
             return _this[idProp];
           };
         }
-
         this.$watch(this.$_getId, {
           handler: function handler(value) {
             var _this2 = this;
-
             this.$nextTick(function () {
               _this2.$_id = value;
             });
@@ -1952,10 +1851,8 @@
         /**
          * Initialize an idState
          * @param {number|string} id Unique id for the data
-         */
-        $_idStateInit: function $_idStateInit(id) {
+         */$_idStateInit: function $_idStateInit(id) {
           var factory = this.$options.idState;
-
           if (typeof factory === 'function') {
             var data = factory.call(this, this);
             vm.$set(store, id, data);
@@ -1965,22 +1862,17 @@
             throw new Error('[mixin IdState] Missing `idState` function on component definition.');
           }
         },
-
         /**
          * Ensure idState is created and up-to-date
-         */
-        $_updateIdState: function $_updateIdState() {
+         */$_updateIdState: function $_updateIdState() {
           var id = this.$_getId();
-
           if (id == null) {
             console.warn("No id found for IdState with idProp: '".concat(idProp, "'."));
           }
-
           if (id !== this.$_id) {
             if (!store[id]) {
               this.$_idStateInit(id);
             }
-
             this.idState = store[id];
           }
         }
@@ -1989,54 +1881,50 @@
   }
 
   function registerComponents(Vue, prefix) {
-    Vue.component("".concat(prefix, "recycle-scroller"), __vue_component__);
-    Vue.component("".concat(prefix, "RecycleScroller"), __vue_component__);
+    Vue.component("".concat(prefix, "recycle-scroller"), __vue_component__$2);
+    Vue.component("".concat(prefix, "RecycleScroller"), __vue_component__$2);
     Vue.component("".concat(prefix, "dynamic-scroller"), __vue_component__$1);
     Vue.component("".concat(prefix, "DynamicScroller"), __vue_component__$1);
-    Vue.component("".concat(prefix, "dynamic-scroller-item"), __vue_component__$2);
-    Vue.component("".concat(prefix, "DynamicScrollerItem"), __vue_component__$2);
+    Vue.component("".concat(prefix, "dynamic-scroller-item"), __vue_component__);
+    Vue.component("".concat(prefix, "DynamicScrollerItem"), __vue_component__);
   }
-
-  var plugin$2 = {
+  var plugin = {
     // eslint-disable-next-line no-undef
-    version: "1.0.10",
+    version: "1.0.11",
     install: function install(Vue, options) {
       var finalOptions = Object.assign({}, {
         installComponents: true,
         componentsPrefix: ''
       }, options);
-
       for (var key in finalOptions) {
         if (typeof finalOptions[key] !== 'undefined') {
           config[key] = finalOptions[key];
         }
       }
-
       if (finalOptions.installComponents) {
         registerComponents(Vue, finalOptions.componentsPrefix);
       }
     }
   };
 
-  var GlobalVue$2 = null;
-
+  // Auto-install
+  var GlobalVue = null;
   if (typeof window !== 'undefined') {
-    GlobalVue$2 = window.Vue;
+    GlobalVue = window.Vue;
   } else if (typeof global !== 'undefined') {
-    GlobalVue$2 = global.Vue;
+    GlobalVue = global.Vue;
   }
-
-  if (GlobalVue$2) {
-    GlobalVue$2.use(plugin$2);
+  if (GlobalVue) {
+    GlobalVue.use(plugin);
   }
 
   exports.DynamicScroller = __vue_component__$1;
-  exports.DynamicScrollerItem = __vue_component__$2;
+  exports.DynamicScrollerItem = __vue_component__;
   exports.IdState = IdState;
-  exports.RecycleScroller = __vue_component__;
-  exports.default = plugin$2;
+  exports.RecycleScroller = __vue_component__$2;
+  exports["default"] = plugin;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=vue-virtual-scroller.umd.js.map
