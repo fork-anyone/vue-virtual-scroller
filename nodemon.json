@@ -1,0 +1,9 @@
+{
+    "verbose": true,
+    "watch": [
+      "src"
+    ],
+    "ext": ".ts,*.vue",
+    "exec": "npm run build"
+  }
+  

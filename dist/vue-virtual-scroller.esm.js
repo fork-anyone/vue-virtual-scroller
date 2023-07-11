@@ -569,14 +569,16 @@ var script$2 = {
           end: start + size
         };
       } else if (isVertical) {
+        var scrollTop = el.scrollTop;
         scrollState = {
-          start: el.scrollTop,
-          end: el.scrollTop + el.clientHeight
+          start: scrollTop,
+          end: scrollTop + el.clientHeight
         };
       } else {
+        var scrollLeft = el.scrollLeft;
         scrollState = {
-          start: el.scrollLeft,
-          end: el.scrollLeft + el.clientWidth
+          start: scrollLeft,
+          end: scrollLeft + el.clientWidth
         };
       }
       return scrollState;

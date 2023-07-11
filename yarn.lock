@@ -815,6 +815,11 @@
     "sass" "^1.18.0"
     "stylus" "^0.54.5"
 
+"abbrev@1":
+  "integrity" "sha1-+PLIh60Qv2f2NPAFtph/7TF5qsg="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/abbrev/-/abbrev-1.1.1.tgz"
+  "version" "1.1.1"
+
 "acorn-jsx@^5.2.0":
   "integrity" "sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ=="
   "resolved" "https://registry.npmmirror.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz"
@@ -1100,7 +1105,7 @@
   "resolved" "https://registry.npmmirror.com/chardet/-/chardet-0.7.0.tgz"
   "version" "0.7.0"
 
-"chokidar@>=3.0.0 <4.0.0":
+"chokidar@^3.5.2", "chokidar@>=3.0.0 <4.0.0":
   "version" "3.5.3"
   dependencies:
     "anymatch" "~3.1.2"
@@ -1934,6 +1939,11 @@
   "resolved" "https://registry.npmjs.org/icss-replace-symbols/-/icss-replace-symbols-1.1.0.tgz"
   "version" "1.1.0"
 
+"ignore-by-default@^1.0.1":
+  "integrity" "sha1-SMptcvbGo68Aqa1K5odr44ieKwk="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/ignore-by-default/-/ignore-by-default-1.0.1.tgz"
+  "version" "1.0.1"
+
 "ignore@^4.0.6":
   "integrity" "sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg=="
   "resolved" "https://registry.npmmirror.com/ignore/-/ignore-4.0.6.tgz"
@@ -2302,6 +2312,13 @@
     "pseudomap" "^1.0.2"
     "yallist" "^2.1.2"
 
+"lru-cache@^6.0.0":
+  "integrity" "sha1-bW/mVw69lqr5D8rR2vo7JWbbOpQ="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/lru-cache/-/lru-cache-6.0.0.tgz"
+  "version" "6.0.0"
+  dependencies:
+    "yallist" "^4.0.0"
+
 "magic-string@^0.25.2", "magic-string@^0.25.7":
   "version" "0.25.9"
   dependencies:
@@ -2388,6 +2405,29 @@
 
 "node-releases@^2.0.6":
   "version" "2.0.6"
+
+"nodemon@^3.0.1":
+  "integrity" "sha1-r/6CKixfITVEZrL8iugyd9J9rcc="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/nodemon/-/nodemon-3.0.1.tgz"
+  "version" "3.0.1"
+  dependencies:
+    "chokidar" "^3.5.2"
+    "debug" "^3.2.7"
+    "ignore-by-default" "^1.0.1"
+    "minimatch" "^3.1.2"
+    "pstree.remy" "^1.1.8"
+    "semver" "^7.5.3"
+    "simple-update-notifier" "^2.0.0"
+    "supports-color" "^5.5.0"
+    "touch" "^3.1.0"
+    "undefsafe" "^2.0.5"
+
+"nopt@~1.0.10":
+  "integrity" "sha1-bd0hvSoxQXuScn3Vhfim83YI6+4="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/nopt/-/nopt-1.0.10.tgz"
+  "version" "1.0.10"
+  dependencies:
+    "abbrev" "1"
 
 "normalize-path@^3.0.0", "normalize-path@~3.0.0":
   "integrity" "sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA=="
@@ -2618,6 +2658,11 @@
   "integrity" "sha1-8FKijacOYYkX7wqKw0wa5aaChrM="
   "resolved" "https://registry.npmjs.org/pseudomap/-/pseudomap-1.0.2.tgz"
   "version" "1.0.2"
+
+"pstree.remy@^1.1.8":
+  "integrity" "sha1-wkIiT0pnwh9oaDm720rCgrg3PTo="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/pstree.remy/-/pstree.remy-1.1.8.tgz"
+  "version" "1.1.8"
 
 "pug-attrs@^3.0.0":
   "version" "3.0.0"
@@ -2929,6 +2974,13 @@
   "resolved" "https://registry.npmjs.org/semver/-/semver-6.3.0.tgz"
   "version" "6.3.0"
 
+"semver@^7.5.3":
+  "integrity" "sha1-SDmG7E7TjhxsSMNIlKkYLb/2im4="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/semver/-/semver-7.5.4.tgz"
+  "version" "7.5.4"
+  dependencies:
+    "lru-cache" "^6.0.0"
+
 "serialize-javascript@^4.0.0":
   "version" "4.0.0"
   dependencies:
@@ -2971,6 +3023,13 @@
   "integrity" "sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ=="
   "resolved" "https://registry.npmmirror.com/signal-exit/-/signal-exit-3.0.7.tgz"
   "version" "3.0.7"
+
+"simple-update-notifier@^2.0.0":
+  "integrity" "sha1-1wuSvat9bZDf1zkxGVowtuPXzrs="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/simple-update-notifier/-/simple-update-notifier-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "semver" "^7.5.3"
 
 "slice-ansi@^2.1.0":
   "integrity" "sha512-Qu+VC3EwYLldKa1fCxuuvULvSJOKEgk9pi8dZeCVK7TqBfUNTH4sFkk4joj8afVSfAYgJoSOetjx9QWOJ5mYoQ=="
@@ -3142,7 +3201,7 @@
   dependencies:
     "has-flag" "^1.0.0"
 
-"supports-color@^5.3.0", "supports-color@^5.4.0":
+"supports-color@^5.3.0", "supports-color@^5.4.0", "supports-color@^5.5.0":
   "integrity" "sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow=="
   "resolved" "https://registry.npmjs.org/supports-color/-/supports-color-5.5.0.tgz"
   "version" "5.5.0"
@@ -3215,6 +3274,13 @@
 "token-stream@1.0.0":
   "version" "1.0.0"
 
+"touch@^3.1.0":
+  "integrity" "sha1-/jZfX3XsntTlaCXgu3bSSrdK+Ds="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/touch/-/touch-3.1.0.tgz"
+  "version" "3.1.0"
+  dependencies:
+    "nopt" "~1.0.10"
+
 "tsconfig-paths@^3.14.1":
   "integrity" "sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g=="
   "resolved" "https://registry.npmmirror.com/tsconfig-paths/-/tsconfig-paths-3.14.2.tgz"
@@ -3263,6 +3329,11 @@
     "has-bigints" "^1.0.2"
     "has-symbols" "^1.0.3"
     "which-boxed-primitive" "^1.0.2"
+
+"undefsafe@^2.0.5":
+  "integrity" "sha1-OHM7kye9zSJtuIn7cjpu/RYubiw="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/undefsafe/-/undefsafe-2.0.5.tgz"
+  "version" "2.0.5"
 
 "unicode-canonical-property-names-ecmascript@^2.0.0":
   "version" "2.0.0"
@@ -3432,3 +3503,8 @@
   "integrity" "sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI="
   "resolved" "https://registry.npmjs.org/yallist/-/yallist-2.1.2.tgz"
   "version" "2.1.2"
+
+"yallist@^4.0.0":
+  "integrity" "sha1-m7knkNnA7/7GO+c1GeEaNQGaOnI="
+  "resolved" "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/yallist/-/yallist-4.0.0.tgz"
+  "version" "4.0.0"
