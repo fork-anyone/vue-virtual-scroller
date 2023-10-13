@@ -75,6 +75,10 @@ export default {
       type: [Number, String],
       required: true,
     },
+    typeField: {
+      type: [String],
+      default: 'type',
+    },
   },
 
   data () {
@@ -108,6 +112,7 @@ export default {
           item,
           id,
           size,
+          type: item[this.typeField],
         })
       }
       return result

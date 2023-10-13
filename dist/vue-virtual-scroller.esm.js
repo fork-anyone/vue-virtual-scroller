@@ -882,6 +882,10 @@ var script$1 = {
     minItemSize: {
       type: [Number, String],
       required: true
+    },
+    typeField: {
+      type: [String],
+      default: 'type'
     }
   }),
   data: function data() {
@@ -914,7 +918,8 @@ var script$1 = {
         result.push({
           item: item,
           id: id,
-          size: size
+          size: size,
+          type: item[this.typeField]
         });
       }
       return result;
@@ -1420,7 +1425,7 @@ function registerComponents(Vue, prefix) {
 }
 var plugin = {
   // eslint-disable-next-line no-undef
-  version: "1.0.11",
+  version: "1.0.13",
   install: function install(Vue, options) {
     var finalOptions = Object.assign({}, {
       installComponents: true,
