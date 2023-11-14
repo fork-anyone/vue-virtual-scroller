@@ -3,11 +3,12 @@
     ref="scroller"
     :items="itemsWithSize"
     :min-item-size="minItemSize"
-    :direction="direction"
     key-field="id"
+    :emit-update="emitUpdate"
     v-bind="$attrs"
     @resize="onScrollerResize"
     @visible="onScrollerVisible"
+    @update="onUpdate"
     v-on="listeners"
   >
     <template slot-scope="{ item: itemWithSize, index, active }">
@@ -79,6 +80,10 @@ export default {
       type: [String],
       default: 'type',
     },
+    emitUpdate: {
+      type: [Boolean],
+      default: false,
+    },
   },
 
   data () {
@@ -140,10 +145,6 @@ export default {
       },
       immediate: true,
     },
-
-    direction (value) {
-      this.forceUpdate(true)
-    },
   },
 
   created () {
@@ -172,6 +173,10 @@ export default {
     onScrollerVisible () {
       this.$emit('vscroll:update', { force: false })
       this.$emit('visible')
+    },
+
+    onUpdate (...args) {
+      this.$emit('update', ...args)
     },
 
     forceUpdate (clear = true) {

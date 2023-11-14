@@ -1,12 +1,7 @@
 <template>
   <div
     v-observe-visibility="handleVisibilityChange"
-    class="vue-recycle-scroller"
-    :class="{
-      ready,
-      'page-mode': pageMode,
-      [`direction-${direction}`]: true,
-    }"
+    class="vue-recycle-scroller ready direction-vertical"
     @scroll.passive="handleScroll"
   >
     <div
@@ -20,13 +15,13 @@
 
     <div
       ref="wrapper"
-      :style="{ [direction === 'vertical' ? 'minHeight' : 'minWidth']: totalSize + 'px' }"
+      :style="{ minHeight: totalSize + 'px' }"
       class="vue-recycle-scroller__item-wrapper"
     >
       <div
         v-for="view of pool"
         :key="view.nr.id"
-        :style="ready ? { transform: `translate${direction === 'vertical' ? 'Y' : 'X'}(${view.position}px)` } : null"
+        :style="ready ? { transform: `translateY(${view.position}px)` } : null"
         class="vue-recycle-scroller__item-view"
       >
         <slot
@@ -99,11 +94,6 @@ export default {
       default: 200,
     },
 
-    pageMode: {
-      type: Boolean,
-      default: false,
-    },
-
     prerender: {
       type: Number,
       default: 0,
@@ -158,11 +148,6 @@ export default {
       this.updateVisibleItems(true)
     },
 
-    pageMode () {
-      this.applyPageMode()
-      this.updateVisibleItems(false)
-    },
-
     sizes: {
       handler () {
         this.updateVisibleItems(false)
@@ -188,7 +173,6 @@ export default {
   },
 
   mounted () {
-    this.applyPageMode()
     this.$nextTick(() => {
       // In SSR mode, render the real number of visible items
       this.$_prerender = false
@@ -496,48 +480,12 @@ export default {
     },
 
     getScroll () {
-      const { $el: el, direction } = this
-      const isVertical = direction === 'vertical'
-      let scrollState
+      const { $el: el } = this
 
-      if (this.pageMode) {
-        const bounds = el.getBoundingClientRect()
-        const boundsSize = isVertical ? bounds.height : bounds.width
-        let start = -(isVertical ? bounds.top : bounds.left)
-        let size = isVertical ? window.innerHeight : window.innerWidth
-        if (start < 0) {
-          size += start
-          start = 0
-        }
-        if (start + size > boundsSize) {
-          size = boundsSize - start
-        }
-        scrollState = {
-          start,
-          end: start + size,
-        }
-      } else if (isVertical) {
-        const scrollTop = el.scrollTop
-        scrollState = {
-          start: scrollTop,
-          end: scrollTop + el.clientHeight,
-        }
-      } else {
-        const scrollLeft = el.scrollLeft
-        scrollState = {
-          start: scrollLeft,
-          end: scrollLeft + el.clientWidth,
-        }
-      }
-
-      return scrollState
-    },
-
-    applyPageMode () {
-      if (this.pageMode) {
-        this.addListeners()
-      } else {
-        this.removeListeners()
+      const scrollTop = el.scrollTop
+      return {
+        start: scrollTop,
+        end: scrollTop + el.clientHeight,
       }
     },
 
@@ -571,11 +519,7 @@ export default {
     },
 
     scrollToPosition (position) {
-      if (this.direction === 'vertical') {
-        this.$el.scrollTop = position
-      } else {
-        this.$el.scrollLeft = position
-      }
+      this.$el.scrollTop = position
     },
 
     itemsLimitError () {

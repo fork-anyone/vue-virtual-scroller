@@ -181,7 +181,7 @@ export default {
     },
 
     applySize (width, height) {
-      const size = Math.round(this.vscrollParent.direction === 'vertical' ? height : width)
+      const size = Math.round(height)
       if (size && this.size !== size) {
         if (this.vscrollParent.$_undefinedMap[this.id]) {
           this.vscrollParent.$_undefinedSizes--

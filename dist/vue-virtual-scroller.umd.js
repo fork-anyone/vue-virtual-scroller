@@ -595,13 +595,6 @@
     keyField: {
       type: String,
       default: 'id'
-    },
-    direction: {
-      type: String,
-      default: 'vertical',
-      validator: function validator(value) {
-        return ['vertical', 'horizontal'].includes(value);
-      }
     }
   };
   function simpleArray() {
@@ -650,10 +643,6 @@
       buffer: {
         type: Number,
         default: 200
-      },
-      pageMode: {
-        type: Boolean,
-        default: false
       },
       prerender: {
         type: Number,
@@ -708,10 +697,6 @@
       items: function items() {
         this.updateVisibleItems(true);
       },
-      pageMode: function pageMode() {
-        this.applyPageMode();
-        this.updateVisibleItems(false);
-      },
       sizes: {
         handler: function handler() {
           this.updateVisibleItems(false);
@@ -736,7 +721,6 @@
     },
     mounted: function mounted() {
       var _this = this;
-      this.applyPageMode();
       this.$nextTick(function () {
         // In SSR mode, render the real number of visible items
         _this.$_prerender = false;
@@ -1020,47 +1004,12 @@
         return target;
       },
       getScroll: function getScroll() {
-        var el = this.$el,
-          direction = this.direction;
-        var isVertical = direction === 'vertical';
-        var scrollState;
-        if (this.pageMode) {
-          var bounds = el.getBoundingClientRect();
-          var boundsSize = isVertical ? bounds.height : bounds.width;
-          var start = -(isVertical ? bounds.top : bounds.left);
-          var size = isVertical ? window.innerHeight : window.innerWidth;
-          if (start < 0) {
-            size += start;
-            start = 0;
-          }
-          if (start + size > boundsSize) {
-            size = boundsSize - start;
-          }
-          scrollState = {
-            start: start,
-            end: start + size
-          };
-        } else if (isVertical) {
-          var scrollTop = el.scrollTop;
-          scrollState = {
-            start: scrollTop,
-            end: scrollTop + el.clientHeight
-          };
-        } else {
-          var scrollLeft = el.scrollLeft;
-          scrollState = {
-            start: scrollLeft,
-            end: scrollLeft + el.clientWidth
-          };
-        }
-        return scrollState;
-      },
-      applyPageMode: function applyPageMode() {
-        if (this.pageMode) {
-          this.addListeners();
-        } else {
-          this.removeListeners();
-        }
+        var el = this.$el;
+        var scrollTop = el.scrollTop;
+        return {
+          start: scrollTop,
+          end: scrollTop + el.clientHeight
+        };
       },
       addListeners: function addListeners() {
         this.listenerTarget = this.getListenerTarget();
@@ -1087,11 +1036,7 @@
         this.scrollToPosition(scroll);
       },
       scrollToPosition: function scrollToPosition(position) {
-        if (this.direction === 'vertical') {
-          this.$el.scrollTop = position;
-        } else {
-          this.$el.scrollLeft = position;
-        }
+        this.$el.scrollTop = position;
       },
       itemsLimitError: function itemsLimitError() {
         var _this4 = this;
@@ -1188,7 +1133,6 @@
   const __vue_script__$2 = script$2;
   /* template */
   var __vue_render__$1 = function () {
-    var _obj, _obj$1;
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
@@ -1203,14 +1147,7 @@
             expression: "handleVisibilityChange",
           },
         ],
-        staticClass: "vue-recycle-scroller",
-        class:
-          ((_obj = {
-            ready: _vm.ready,
-            "page-mode": _vm.pageMode,
-          }),
-          (_obj["direction-" + _vm.direction] = true),
-          _obj),
+        staticClass: "vue-recycle-scroller ready direction-vertical",
         on: {
           "&scroll": function ($event) {
             return _vm.handleScroll.apply(null, arguments)
@@ -1232,11 +1169,7 @@
           {
             ref: "wrapper",
             staticClass: "vue-recycle-scroller__item-wrapper",
-            style:
-              ((_obj$1 = {}),
-              (_obj$1[_vm.direction === "vertical" ? "minHeight" : "minWidth"] =
-                _vm.totalSize + "px"),
-              _obj$1),
+            style: { minHeight: _vm.totalSize + "px" },
           },
           _vm._l(_vm.pool, function (view) {
             return _c(
@@ -1245,14 +1178,7 @@
                 key: view.nr.id,
                 staticClass: "vue-recycle-scroller__item-view",
                 style: _vm.ready
-                  ? {
-                      transform:
-                        "translate" +
-                        (_vm.direction === "vertical" ? "Y" : "X") +
-                        "(" +
-                        view.position +
-                        "px)",
-                    }
+                  ? { transform: "translateY(" + view.position + "px)" }
                   : null,
               },
               [
@@ -1358,6 +1284,10 @@
       typeField: {
         type: [String],
         default: 'type'
+      },
+      emitUpdate: {
+        type: [Boolean],
+        default: false
       }
     }),
     data: function data() {
@@ -1415,9 +1345,6 @@
           this.vscrollData.simpleArray = value;
         },
         immediate: true
-      },
-      direction: function direction(value) {
-        this.forceUpdate(true);
       }
     },
     created: function created() {
@@ -1444,6 +1371,12 @@
           force: false
         });
         this.$emit('visible');
+      },
+      onUpdate: function onUpdate() {
+        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+        this.$emit.apply(this, ['update'].concat(args));
       },
       forceUpdate: function forceUpdate() {
         var clear = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
@@ -1506,10 +1439,14 @@
             attrs: {
               items: _vm.itemsWithSize,
               "min-item-size": _vm.minItemSize,
-              direction: _vm.direction,
               "key-field": "id",
+              "emit-update": _vm.emitUpdate,
             },
-            on: { resize: _vm.onScrollerResize, visible: _vm.onScrollerVisible },
+            on: {
+              resize: _vm.onScrollerResize,
+              visible: _vm.onScrollerVisible,
+              update: _vm.onUpdate,
+            },
             scopedSlots: _vm._u(
               [
                 {
@@ -1739,7 +1676,7 @@
         });
       },
       applySize: function applySize(width, height) {
-        var size = Math.round(this.vscrollParent.direction === 'vertical' ? height : width);
+        var size = Math.round(height);
         if (size && this.size !== size) {
           if (this.vscrollParent.$_undefinedMap[this.id]) {
             this.vscrollParent.$_undefinedSizes--;
@@ -1897,7 +1834,7 @@
   }
   var plugin = {
     // eslint-disable-next-line no-undef
-    version: "1.0.13",
+    version: "1.0.15",
     install: function install(Vue, options) {
       var finalOptions = Object.assign({}, {
         installComponents: true,
